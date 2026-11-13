@@ -1,0 +1,9 @@
+# Yosys synthesis script. Run from the repository root:  yosys -s synth/syn.ys
+read_verilog rtl/priority_encoder_8to3.v
+hierarchy -top priority_encoder_8to3
+proc; opt
+synth -top priority_encoder_8to3
+abc -g AND,NAND,OR,NOR,XOR,XNOR,ANDNOT,ORNOT,MUX
+opt_clean
+tee -o synth/stat.txt stat
+write_verilog -noattr synth/synth.v
